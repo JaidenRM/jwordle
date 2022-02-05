@@ -1,4 +1,5 @@
-import { WordGenerator } from './utils/word-generator';
+import { Board } from './components/Board';
+import { WordGenerator } from './utils/generators/words';
 
 function App() {
   var wordGen = new WordGenerator();
@@ -12,6 +13,9 @@ function App() {
       <div className="random-n-word">
         <h2>Our random 5 letter word is:</h2>
         <h1>{wordGen.getRandomLengthWord(5)}</h1>
+      </div>
+      <div className="board">
+        <Board word='HEllO' attempts={6} />
       </div>
     </div>
   );

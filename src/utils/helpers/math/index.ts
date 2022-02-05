@@ -1,7 +1,5 @@
-import internal from "stream";
-
 export class MathHelper {
-    getRandomNumber(min: number, max: number): number {
+    static getRandomNumber(min: number, max: number): number {
         min = Math.ceil(min);
         max = Math.floor(max);
 
