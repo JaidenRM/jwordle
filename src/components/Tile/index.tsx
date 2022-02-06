@@ -1,4 +1,6 @@
 import { CSSProperties, FC } from "react";
+import { TileStatus } from "../../@enums/tileStatus";
+import { TileState } from "../../@types/tile/state";
 
 const tileStyle: CSSProperties = { 
     border: '1px solid black',
@@ -11,15 +13,38 @@ const tileStyle: CSSProperties = {
     justifyContent: 'center'
 };
 
-interface TileProps {
-    char: string
+const getBackgroundColour = (tileStatus?: TileStatus): CSSProperties => {
+    let bgColour = 'white';
+    
+    switch (tileStatus) {
+        case TileStatus.Correct:
+            bgColour = 'green';
+            break;
+        case TileStatus.WrongSpot:
+            bgColour = 'yellow';
+            break;
+        case TileStatus.Incorrect:
+            bgColour = 'grey';
+            break;
+        case TileStatus.Editing:
+            bgColour = 'white';
+    }
+
+    return { backgroundColor: bgColour };
 }
 
-export const Tile: FC<TileProps> = ({ char }) => {
+interface TileProps {
+    state: TileState
+}
+
+export const Tile: FC<TileProps> = ({state}) => {
+    if (!state) return <div>ERR</div>
+
+    const { letter, status } = state;
 
     return (
-        <div style={tileStyle}>
-            {char.toUpperCase()}
+        <div style={{...tileStyle, ...getBackgroundColour(status)}}>
+            {letter.toString().toUpperCase()}
         </div>
     );
 }

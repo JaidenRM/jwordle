@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from "react";
+import { TileState } from "../../@types/tile/state";
 import { Tile } from "../Tile";
 
 const tileRowStyle: CSSProperties = {
@@ -8,13 +9,13 @@ const tileRowStyle: CSSProperties = {
 
 interface TileRowProps {
     rowLength: number
-    rowWord: string
+    rowState: TileState[]
 }
 
-export const TileRow: FC<TileRowProps> = ({ rowLength, rowWord }) => {
+export const TileRow: FC<TileRowProps> = ({ rowLength, rowState }) => {
     return (
         <div style={tileRowStyle}>
-            { [...Array(rowLength)].map((val, ind) => <Tile key={ind} char={rowWord[ind]} />) }
+            { [...Array(rowLength)].map((val, ind) => <Tile key={ind} state={rowState[ind]} />) }
         </div>
     );
 }
