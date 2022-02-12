@@ -1,6 +1,8 @@
 import { FC, useEffect, useMemo, useState } from "react";
+import { GameStatus } from "../../@enums/gameStatus";
 import { TileStatus } from "../../@enums/tileStatus";
 import { useBoardRowState } from "../../@hooks/useBoardRowState";
+import { GameState } from "../../@types/states/game";
 import { WordValidator } from "../../@types/words/validator";
 import { KeyHelper } from "../../utils/helpers/key";
 import { StringHelper } from "../../utils/helpers/string";
@@ -11,9 +13,10 @@ import { TileRow } from "../TileRow";
 interface BoardProps {
     word: string
     attempts: number
+    onGameEnd?: (state: Partial<GameState>) => void
 }
 
-export const Board: FC<BoardProps> = ({ word, attempts }) => {
+export const Board: FC<BoardProps> = ({ word, attempts, onGameEnd }) => {
     const [rowDict, setRow] = useBoardRowState(word.length, attempts);
     const [activeRow, setActiveRow] = useState(0);
 
@@ -24,23 +27,14 @@ export const Board: FC<BoardProps> = ({ word, attempts }) => {
         const handleKeyDown = (ev: KeyboardEvent) => {
             var trimmedWord = TileHelper.toString(rowDict[activeRow]).trim();
             if (ev.key === KeyHelper.ENTER && trimmedWord.length === word.length) {
-                if (activeRow >= attempts - 1) {
-                    //TODO: improve on
-                    alert(`Failed. Word was ${word}`);
-                    return;
-                }
                 if (!validator.isValidWord(trimmedWord)) {
                     //TODO: improve on
-                    alert('Not a valid word');
+                    alert('Guess again, that word is not in our list');
                     return;
                 }
 
-                const guessResults = validator.checkGuess(trimmedWord);
-
-                setRow(guessResults, activeRow);
+                setRow(validator.checkGuess(trimmedWord), activeRow);
                 setActiveRow(prev => prev + 1);
-
-                if (guessResults.every(tile => tile.status === TileStatus.Correct)) alert('You win!'); //TODO: we win
             } else if (ev.key === KeyHelper.BACKSPACE) {
                 const shortenedState = TileHelper.fromString(StringHelper.removeLastChar(trimmedWord));
                 setRow(shortenedState, activeRow);
@@ -52,8 +46,19 @@ export const Board: FC<BoardProps> = ({ word, attempts }) => {
         document.addEventListener("keydown", handleKeyDown);
 
         return () => document.removeEventListener("keydown", handleKeyDown);
-        //eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeRow, rowDict, attempts, word.length]);
+
+    useEffect(() => {
+        if (activeRow >= attempts && onGameEnd)
+            onGameEnd({ status: GameStatus.Lost });
+        else if (activeRow > 0 && rowDict[activeRow - 1].every(tile => tile.status === TileStatus.Correct) && onGameEnd) 
+            onGameEnd({
+                usedAttempts: activeRow,
+                status: GameStatus.Won,
+            });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeRow, rowDict, attempts])
 
     return (
         <div>

@@ -1,9 +1,17 @@
+import { GameStatus } from './@enums/gameStatus';
+import { useGameState } from './@hooks/useGameState';
 import { WordGenerator } from './@types/words/generator';
 import { Board } from './components/Board';
 import { LocalWordGenerator } from './utils/generators/words/local';
 
 function App() {
   const generator: WordGenerator = new LocalWordGenerator();
+  const [gameState, setGameState] = useGameState({
+    status: GameStatus.InGame,
+    wordToGuess: generator.getRandomLengthWord(5),
+    totalAttempts: 6,
+    usedAttempts: 0,
+  });
 
   return (
     <div className="App">
@@ -16,7 +24,7 @@ function App() {
         <h1>{generator.getRandomLengthWord(5)}</h1>
       </div>
       <div className="board">
-        <Board word={generator.getRandomLengthWord(5)} attempts={6} />
+        <Board word={gameState.wordToGuess} attempts={gameState.totalAttempts} onGameEnd={setGameState} />
       </div>
     </div>
   );
