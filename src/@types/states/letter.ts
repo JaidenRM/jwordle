@@ -1,7 +1,7 @@
 import { TileStatus } from "../../@enums/tileStatus";
 import { Char } from "../char";
 
-export interface TileState {
+export interface LetterState {
     letter: Char
     status: TileStatus
 }

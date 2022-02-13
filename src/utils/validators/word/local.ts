@@ -1,6 +1,6 @@
 import { TileStatus } from "../../../@enums/tileStatus";
 import { Char } from "../../../@types/char";
-import { TileState } from "../../../@types/tile/state";
+import { LetterState } from "../../../@types/states/letter";
 import { WordValidator } from "../../../@types/words/validator";
 import { WordList } from "../../lists/words";
 
@@ -19,14 +19,14 @@ export class LocalWordValidator implements WordValidator {
         return this.validWords.find(validWord => validWord.toLowerCase() === word.toLowerCase()) !== undefined;
     }
 
-    checkGuess = (guess: string): TileState[] => {
-        var tileStatuses: TileState[] = [];
+    checkGuess = (guess: string): LetterState[] => {
+        var tileStatuses: LetterState[] = [];
         var parsedGuess = guess.toLowerCase();
 
         for(let i = 0; i < this.targetWord.length; i++) {
             if (parsedGuess.length < i) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.Incorrect }); // This shouldn't occur bc of `isValidWord`
             else if (parsedGuess[i] === this.targetWord[i]) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.Correct });
-            else if (this.targetWord.indexOf(parsedGuess[i]) !== -1) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.WrongSpot });
+            else if (parsedGuess.indexOf(this.targetWord[i]) !== -1) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.WrongSpot });
             else tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.Incorrect });
         }
 
