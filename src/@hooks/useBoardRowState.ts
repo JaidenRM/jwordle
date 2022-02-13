@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { TileStatus } from "../@enums/tileStatus";
 import { Char } from "../@types/char";
-import { TileState } from "../@types/tile/state";
+import { LetterState } from "../@types/states/letter";
 
-const parseRowState = (rowState: TileState[], rowLength: number): TileState[] => {
+const parseRowState = (rowState: LetterState[], rowLength: number): LetterState[] => {
     if (rowState.length === rowLength) return rowState;
     if (rowState.length > rowLength) return rowState.slice(0, rowLength);
 
-    var emptyState: TileState = {
+    var emptyState: LetterState = {
         letter: new Char(' '),
         status: TileStatus.Editing,
     }
@@ -16,11 +16,11 @@ const parseRowState = (rowState: TileState[], rowLength: number): TileState[] =>
 }
 
 export const useBoardRowState = (wordLength: number, attempts: number) => {
-    const [boardState, setBoardState] = useState<TileState[][]>(
+    const [boardState, setBoardState] = useState<LetterState[][]>(
         Array(attempts).fill(parseRowState([], wordLength))
     );
 
-    const setRow = (rowState: TileState[], rowIndex: number) => {
+    const setRow = (rowState: LetterState[], rowIndex: number) => {
         if (rowIndex > boardState.length) return;
 
         setBoardState(prev => {

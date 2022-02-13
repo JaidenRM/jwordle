@@ -1,5 +1,5 @@
 import { CSSProperties, FC } from "react";
-import { TileState } from "../../@types/tile/state";
+import { LetterState } from "../../@types/states/letter";
 import { Tile } from "../Tile";
 
 const tileRowStyle: CSSProperties = {
@@ -9,7 +9,7 @@ const tileRowStyle: CSSProperties = {
 
 interface TileRowProps {
     rowLength: number
-    rowState: TileState[]
+    rowState: LetterState[]
 }
 
 export const TileRow: FC<TileRowProps> = ({ rowLength, rowState }) => {
