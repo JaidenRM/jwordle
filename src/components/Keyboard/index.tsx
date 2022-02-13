@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from "react";
+import { TileStatus } from "../../@enums/tileStatus";
 import { LetterState } from "../../@types/states/letter";
 import { KeyHelper } from "../../utils/helpers/key";
 import { Key } from "./key";
@@ -17,13 +18,25 @@ interface KeyboardProps {
     letterStates?: LetterState[]
 }
 
+const findKeyStatus = (targetKey: string, letterStates?: LetterState[]): TileStatus | undefined => {
+    if (letterStates) {
+        var sortedByStatus = letterStates
+            .filter(state => state.letter.toString().toLowerCase() === targetKey.toLowerCase())
+            .sort((a, b) => b.status - a.status);
+        
+        if (sortedByStatus.length) return sortedByStatus[0].status;
+    }
+
+    return undefined;
+}
+
 export const Keyboard: FC<KeyboardProps> = ({ letterStates }) => {
     return (
         <div style={{ display: "flex" }}>
             <div className="letters" style={lettersStyle}>
                 {KeyHelper.UpperAlpha.map(key => (
                     <div style={letterStyle} key={key}>
-                        <Key value={key} status={letterStates?.find(state => state.letter.toString().toLowerCase() === key.toLowerCase())?.status} />
+                        <Key value={key} status={findKeyStatus(key, letterStates)} />
                     </div>
                 ))}
             </div>

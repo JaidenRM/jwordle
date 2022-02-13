@@ -20,15 +20,22 @@ export class LocalWordValidator implements WordValidator {
     }
 
     checkGuess = (guess: string): LetterState[] => {
-        var tileStatuses: LetterState[] = [];
-        var parsedGuess = guess.toLowerCase();
+        const parsedGuess = guess.toLowerCase();
+        const targetArr = [...this.targetWord];
+        const tileStatuses = [...parsedGuess].map(letter => ({ letter: new Char(letter), status: TileStatus.Incorrect }));
 
-        for(let i = 0; i < this.targetWord.length; i++) {
-            if (parsedGuess.length < i) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.Incorrect }); // This shouldn't occur bc of `isValidWord`
-            else if (parsedGuess[i] === this.targetWord[i]) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.Correct });
-            else if (parsedGuess.indexOf(this.targetWord[i]) !== -1) tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.WrongSpot });
-            else tileStatuses.push({ letter: new Char(guess[i]), status: TileStatus.Incorrect });
-        }
+        if (guess.length !== targetArr.length) return [];
+
+        targetArr.forEach((letter, ind) => {
+            if (letter === parsedGuess[ind]) tileStatuses[ind].status = TileStatus.Correct;
+        });
+
+        targetArr.forEach((letter, ind) => {
+            if (tileStatuses[ind].status === TileStatus.Correct) return;
+            
+            const foundIndex = [...parsedGuess].findIndex((guessLetter, i) => guessLetter === letter && tileStatuses[i].status === TileStatus.Incorrect);
+            if (foundIndex !== -1) tileStatuses[foundIndex].status = TileStatus.WrongSpot;
+        });
 
         return tileStatuses;
     }
