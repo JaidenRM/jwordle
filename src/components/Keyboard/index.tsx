@@ -1,18 +1,8 @@
-import { CSSProperties, FC } from "react";
+import { FC } from "react";
 import { TileStatus } from "../../@enums/tileStatus";
 import { LetterState } from "../../@types/states/letter";
 import { KeyHelper } from "../../utils/helpers/key";
 import { Key } from "./key";
-
-const lettersStyle: CSSProperties = {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-}
-
-const letterStyle: CSSProperties = {
-    flex: "0 1 10%",
-}
 
 interface KeyboardProps {
     letterStates?: LetterState[]
@@ -32,15 +22,14 @@ const findKeyStatus = (targetKey: string, letterStates?: LetterState[]): TileSta
 
 export const Keyboard: FC<KeyboardProps> = ({ letterStates }) => {
     return (
-        <div style={{ display: "flex" }}>
-            <div className="letters" style={lettersStyle}>
-                {KeyHelper.UpperAlpha.map(key => (
-                    <div style={letterStyle} key={key}>
-                        <Key value={key} status={findKeyStatus(key, letterStates)} />
-                    </div>
-                ))}
+        <div className="flex w-[650px] m-auto">
+            <div className="flex flex-wrap justify-center basis-5/6">
+                {KeyHelper.UpperAlpha.map(key => 
+                    <div className="basis-[10%]" >
+                        <Key key={key} value={key} status={findKeyStatus(key, letterStates)} />
+                    </div>)}
             </div>
-            <div className="actions">
+            <div className="flex flex-wrap basis-1/6 justify-start flex-col">
                 <div><Key value={KeyHelper.BACKSPACE} displayValue="⬅" /></div>
                 <div><Key value={KeyHelper.ENTER} displayValue="↵" /></div>
             </div>

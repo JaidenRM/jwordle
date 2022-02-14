@@ -6,6 +6,7 @@ import { WordGenerator } from './@types/words/generator';
 import { Board } from './components/Board';
 import { Keyboard } from './components/Keyboard';
 import { LocalWordGenerator } from './utils/generators/words/local';
+import './index.css';
 
 function App() {
   const generator: WordGenerator = useMemo(() => new LocalWordGenerator(), []);
@@ -22,7 +23,7 @@ function App() {
       <div className="board">
         <Board gameState={gameState} boardState={boardState} setGameState={setGameState} setBoardState={setBoardState} />
       </div>
-      <div className="keyboard" style={{ width: "550px"}}>
+      <div className="keyboard">
         <Keyboard letterStates={boardState.flatMap(state => state)} />
       </div>
     </div>
