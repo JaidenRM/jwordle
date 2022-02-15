@@ -4,7 +4,7 @@ import { TileStatus } from "../../@enums/tileStatus";
 const getBackgroundColour = (tileStatus?: TileStatus): string => {    
     switch (tileStatus) {
         case TileStatus.Correct:
-            return 'bg-green-500';
+            return 'bg-green-600';
         case TileStatus.WrongSpot:
             return 'bg-yellow-300';
         case TileStatus.Incorrect:
