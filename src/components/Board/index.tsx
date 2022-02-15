@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { GameStatus } from "../../@enums/gameStatus";
 import { TileStatus } from "../../@enums/tileStatus";
+import { HtmlProps } from "../../@types/html";
 import { GameState } from "../../@types/states/game";
 import { LetterState } from "../../@types/states/letter";
 import { WordValidator } from "../../@types/words/validator";
@@ -10,14 +11,14 @@ import { TileHelper } from "../../utils/helpers/tile";
 import { LocalWordValidator } from "../../utils/validators/word/local";
 import { TileRow } from "../TileRow";
 
-interface BoardProps {
+interface BoardProps extends HtmlProps {
     gameState: GameState,
     boardState: LetterState[][]
     setGameState: (state: Partial<GameState>) => void
     setBoardState: (rowState: LetterState[], rowIndex: number) => void
 }
 
-export const Board: FC<BoardProps> = ({ gameState, boardState, setGameState, setBoardState }) => {
+export const Board: FC<BoardProps> = ({ gameState, boardState, setGameState, setBoardState, className }) => {
     const { wordToGuess, totalAttempts } = gameState;
     const [activeRow, setActiveRow] = useState(0);
 
@@ -62,8 +63,14 @@ export const Board: FC<BoardProps> = ({ gameState, boardState, setGameState, set
     }, [activeRow, boardState, totalAttempts])
 
     return (
-        <div>
-            { [...Array(totalAttempts)].map((val, ind) => <TileRow key={ind} rowLength={wordToGuess.length} rowState={boardState[ind]} />) }
+        <div className={`flex flex-row flex-wrap ${className}`}>
+            { [...Array(totalAttempts)].map((val, ind) =>
+                <TileRow
+                    key={ind}
+                    className="w-full justify-center"
+                    rowLength={wordToGuess.length}
+                    rowState={boardState[ind]}
+                />) }
         </div>
     );
 }

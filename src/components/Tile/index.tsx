@@ -1,50 +1,32 @@
-import { CSSProperties, FC } from "react";
+import { FC } from "react";
 import { TileStatus } from "../../@enums/tileStatus";
+import { HtmlProps } from "../../@types/html";
 import { LetterState } from "../../@types/states/letter";
 
-const tileStyle: CSSProperties = { 
-    border: '1px solid black',
-    height: '2rem',
-    width: '2rem',
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    margin: '0.25rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-};
-
-const getBackgroundColour = (tileStatus?: TileStatus): CSSProperties => {
-    let bgColour = 'white';
-    
+const getBackgroundColour = (tileStatus?: TileStatus): string => {
     switch (tileStatus) {
         case TileStatus.Correct:
-            bgColour = 'green';
-            break;
+            return 'bg-green-600';
         case TileStatus.WrongSpot:
-            bgColour = 'yellow';
-            break;
+            return 'bg-yellow-300';
         case TileStatus.Incorrect:
-            bgColour = 'grey';
-            break;
-        case TileStatus.Editing:
-            bgColour = 'white';
+            return 'bg-gray-500';
+        default:
+            return 'white';
     }
-
-    return { backgroundColor: bgColour };
 }
 
-interface TileProps {
+interface TileProps extends HtmlProps {
     state: LetterState
 }
 
-export const Tile: FC<TileProps> = ({state}) => {
+export const Tile: FC<TileProps> = ({ state, className }) => {
     if (!state) return <div>ERR</div>
 
     const { letter, status } = state;
 
     return (
-        <div style={{...tileStyle, ...getBackgroundColour(status)}}>
+        <div className={`border-black h-16 w-16 border rounded-md font-bold m-1 text-center align-middle text-4xl leading-[4rem] ${getBackgroundColour(status)} ${className}`}>
             {letter.toString().toUpperCase()}
         </div>
     );

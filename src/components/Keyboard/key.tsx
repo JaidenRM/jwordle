@@ -1,35 +1,17 @@
-import { CSSProperties, FC } from "react";
+import { FC } from "react";
 import { TileStatus } from "../../@enums/tileStatus";
 
-const tileStyle: CSSProperties = { 
-    border: '1px solid black',
-    borderRadius: '0.5rem',
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    margin: '0.25rem',
-    padding: '0.5rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer'
-};
-
-const getBackgroundColour = (tileStatus?: TileStatus): CSSProperties => {
-    let bgColour = 'lightgrey';
-    
+const getBackgroundColour = (tileStatus?: TileStatus): string => {    
     switch (tileStatus) {
         case TileStatus.Correct:
-            bgColour = 'green';
-            break;
+            return 'bg-green-600';
         case TileStatus.WrongSpot:
-            bgColour = 'yellow';
-            break;
+            return 'bg-yellow-300';
         case TileStatus.Incorrect:
-            bgColour = 'grey';
-            break;
+            return 'bg-gray-500';
+        default:
+            return 'bg-zinc-300';
     }
-
-    return { backgroundColor: bgColour };
 }
 
 interface KeyProps {
@@ -48,7 +30,10 @@ export const Key: FC<KeyProps> = ({value, displayValue, status = TileStatus.Edit
     }
 
     return (
-        <div style={{...tileStyle, ...getBackgroundColour(status)}} onClick={onKeyClick}>
+        <div 
+            className={`border-black border rounded-md text-2xl font-bold m-1 px-2 py-1 flex justify-center align-middle cursor-pointer ${getBackgroundColour(status)}`} 
+            onClick={onKeyClick}
+        >
             {(displayValue ?? value).toUpperCase()}
         </div>
     );

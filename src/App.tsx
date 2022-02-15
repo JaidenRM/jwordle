@@ -6,6 +6,7 @@ import { WordGenerator } from './@types/words/generator';
 import { Board } from './components/Board';
 import { Keyboard } from './components/Keyboard';
 import { LocalWordGenerator } from './utils/generators/words/local';
+import './index.css';
 
 function App() {
   const generator: WordGenerator = useMemo(() => new LocalWordGenerator(), []);
@@ -18,13 +19,18 @@ function App() {
   const [boardState, setBoardState] = useBoardRowState(gameState.wordToGuess.length, gameState.totalAttempts);
 
   return (
-    <div className="App">
-      <div className="board">
-        <Board gameState={gameState} boardState={boardState} setGameState={setGameState} setBoardState={setBoardState} />
+    <div className="container mx-auto flex flex-row flex-wrap h-screen">
+      <h1 className="text-7xl font-bold text-center w-full mb-6">jwordle</h1>
+      <div className="flex-grow mb-6">
+        <Board
+          className="container mx-auto"
+          gameState={gameState}
+          boardState={boardState}
+          setGameState={setGameState}
+          setBoardState={setBoardState}
+        />
       </div>
-      <div className="keyboard" style={{ width: "550px"}}>
-        <Keyboard letterStates={boardState.flatMap(state => state)} />
-      </div>
+      <Keyboard letterStates={boardState.flatMap(state => state)} className="w-[650px]" />
     </div>
   );
 }
