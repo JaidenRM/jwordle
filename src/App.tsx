@@ -12,7 +12,7 @@ function App() {
   const generator: WordGenerator = useMemo(() => new LocalWordGenerator(), []);
   const [gameState, setGameState] = useGameState({
     status: GameStatus.InGame,
-    wordToGuess: generator.getRandomLengthWord(5),
+    wordToGuess: generator.getLengthWord(5),
     totalAttempts: 6,
     usedAttempts: 0,
   });
