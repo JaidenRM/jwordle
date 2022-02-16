@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="container mx-auto flex flex-row flex-wrap h-screen">
-      <h1 className="text-7xl font-bold text-center w-full mb-6">jwordle</h1>
+      <h1 className="text-5xl lg:text-7xl font-bold text-center w-full mb-6">jwordle</h1>
       <div className="flex-grow mb-6">
         <Board
           className="container mx-auto"

@@ -26,7 +26,7 @@ export const Tile: FC<TileProps> = ({ state, className }) => {
     const { letter, status } = state;
 
     return (
-        <div className={`border-black h-16 w-16 border rounded-md font-bold m-1 text-center align-middle text-4xl leading-[4rem] ${getBackgroundColour(status)} ${className}`}>
+        <div className={`border-black h-12 w-12 lg:h-16 lg:w-16 border rounded-md font-bold m-1 text-center align-middle text-3xl leading-[3rem] lg:text-4xl lg:leading-[4rem] ${getBackgroundColour(status)} ${className}`}>
             {letter.toString().toUpperCase()}
         </div>
     );
