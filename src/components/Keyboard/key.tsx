@@ -31,7 +31,7 @@ export const Key: FC<KeyProps> = ({value, displayValue, status = TileStatus.Edit
 
     return (
         <div 
-            className={`border-black border rounded-md text-2xl font-bold m-1 px-2 py-1 flex justify-center align-middle cursor-pointer ${getBackgroundColour(status)}`} 
+            className={`border-black border rounded-md text-lg sm:text-2xl font-bold m-1 sm:px-2 py-1 flex justify-center align-middle cursor-pointer ${getBackgroundColour(status)}`} 
             onClick={onKeyClick}
         >
             {(displayValue ?? value).toUpperCase()}
