@@ -35,21 +35,21 @@ export const Keyboard: FC<KeyboardProps> = ({ letterStates, className }) => {
 
         if (i === qwertyDict.length - 1) {
             keyboardRow.push(
-                <div className="basis-[15%]" >
+                <div className="basis-[15%]" key={KeyHelper.ENTER} >
                     <Key value={KeyHelper.ENTER} displayValue="✔️" />
                 </div>);
         }
 
         row.forEach((ltr, j) => {
             keyboardRow.push(
-                <div className="basis-[10%]" >
-                    <Key key={ltr} value={ltr} status={findKeyStatus(ltr, letterStates)} />
+                <div className="basis-[10%]" key={ltr}>
+                    <Key value={ltr} status={findKeyStatus(ltr, letterStates)} />
                 </div>);
         });
 
         if (i === qwertyDict.length - 1) {
             keyboardRow.push(
-                <div className="basis-[15%]" >
+                <div className="basis-[15%]" key={KeyHelper.BACKSPACE} >
                     <Key value={KeyHelper.BACKSPACE} displayValue="❌" />
                 </div>);
         }

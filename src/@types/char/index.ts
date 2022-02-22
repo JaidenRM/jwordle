@@ -1,15 +1,19 @@
 export class Char {
-    readonly value: string;
+    readonly char: string;
 
     constructor(char: string) {
         if (char.length !== 1) {
             throw new Error(`${char} is not a single character`);
         }
 
-        this.value = char;
+        this.char = char;
     }
 
     toString() {
-        return this.value;
+        return this.char;
+    }
+
+    static isChar(obj: any): obj is Char {
+        return typeof obj === "object" && "char" in obj && obj.char.length === 1;
     }
 }
