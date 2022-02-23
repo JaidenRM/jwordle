@@ -23,7 +23,7 @@ function App() {
   }, [state.status]);
 
   return (
-    <div className="container mx-auto flex flex-row flex-wrap h-screen">
+    <div className="container mx-auto flex flex-row flex-wrap h-full">
       <h1 className="text-5xl lg:text-7xl font-bold text-center w-full">jwordle</h1>
       <div className="flex-grow m-auto">
         <Board
