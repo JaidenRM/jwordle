@@ -1,3 +1,4 @@
 export enum LocalStorageKey {
-    BoardState = "jwordle_boardState",
+  BoardState = "jwordle_boardState",
+  Statistics = "jwordle_statistics",
 }
