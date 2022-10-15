@@ -20,7 +20,7 @@ export const Modal: FC<ModalProps> = ({
     ReactDOM.createPortal(
       <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden transition ease-in-out duration-300 z-[999]">
         <div
-          className="bg-white z-[999] lg:max-w-3xl xl:max-w-5xl m-auto p-4 relative overflow-auto rounded-xl"
+          className="bg-white z-[999] lg:max-w-3xl xl:max-w-5xl m-2 p-4 relative overflow-auto rounded-xl w-[calc(100vw-0.5rem)] sm:w-[600px]"
           role="dialog"
           aria-modal="true"
         >
