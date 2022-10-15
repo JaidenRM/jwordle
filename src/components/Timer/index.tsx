@@ -4,9 +4,10 @@ import { NumberHelper } from "../../utils/helpers/number";
 
 interface TimerProps {
   targetTime: DateTime;
+  onFinish?: () => void;
 }
 
-export const Timer: FC<TimerProps> = ({ targetTime }) => {
+export const Timer: FC<TimerProps> = ({ targetTime, onFinish }) => {
   const [secondsLeft, setSecondsLeft] = useState(
     Math.floor(targetTime.diffNow("seconds").seconds)
   );
@@ -38,8 +39,10 @@ export const Timer: FC<TimerProps> = ({ targetTime }) => {
   }, []);
 
   useEffect(() => {
-    if (secondsLeft <= 0 && timerIntervalRef.current)
+    if (secondsLeft <= 0 && timerIntervalRef.current) {
       clearInterval(timerIntervalRef.current);
+      if (onFinish) onFinish();
+    }
   }, [secondsLeft]);
 
   return (
