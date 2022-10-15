@@ -35,6 +35,11 @@ export const BarChart: FC<BarChartProps> = ({ data, isVertical }) => {
               borderRadius: 5,
             },
           },
+          layout: {
+            padding: {
+              right: 30,
+            },
+          },
           scales: {
             [oppositeAxis]: {
               beginAtZero: true,
